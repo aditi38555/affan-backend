@@ -9,16 +9,17 @@ const app = express();
 /* =========================
    CORS FIX (IMPORTANT)
 ========================= */
-app.use(
-  cors({
-    origin: [
-      "https://affantravel.netlify.app",
-      "http://localhost:5173",
-    ],
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:8081",
+    "https://affantravel.netlify.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
+
 
 // preflight support (VERY IMPORTANT)
 app.options("*", cors());
