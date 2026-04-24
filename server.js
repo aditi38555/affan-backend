@@ -55,7 +55,7 @@ app.post("/create-order", async (req, res) => {
     // ✅ VALID PACKAGE IDS
     const validPackages = ["1","2","3","4","5","6","7","8"];
 
-    if (!packageId || !validPackages.includes(packageId)) {
+    if (!packageId ) {
       return res.status(400).json({ error: "Invalid package selected" });
     }
 
@@ -145,7 +145,7 @@ app.post("/verify-payment", async (req, res) => {
       "8": "Udaipur Family Trip",
     };
 
-    const packageName = packageMap[formData.packageId];
+const packageName = packageMap[formData.packageId] || "Unknown Package";
 
     // ✅ USER EMAIL
     await transporter.sendMail({
