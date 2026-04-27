@@ -18,7 +18,7 @@ app.use(cors({
     "http://localhost:5173",
     "http://localhost:8081",
     "http://localhost:8080",
-    "https://affantravel.netlify.app"
+    "https://lovely-tartufo-088717.netlify.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
@@ -59,9 +59,9 @@ app.post("/create-order", async (req, res) => {
     // ✅ VALID PACKAGE IDS
     const validPackages = ["1","2","3","4","5","6","7","8"];
 
-    if (!packageId ) {
-      return res.status(400).json({ error: "Invalid package selected" });
-    }
+    if (!packageId) {
+  return res.status(400).json({ error: "Package not selected" });
+}
 
     const amount = Number(price);
 
@@ -84,7 +84,7 @@ app.post("/create-order", async (req, res) => {
         },
         order_meta: {
           return_url:
-            "https://affantravel.netlify.app/success?order_id={order_id}",
+            "https://lovely-tartufo-088717.netlify.app/success?order_id={order_id}",
         },
       },
       {
@@ -107,6 +107,7 @@ app.post("/create-order", async (req, res) => {
     return res.status(500).json({ error: "Order creation failed" });
   }
 });
+
 /* =========================
    VERIFY PAYMENT
 ========================= */
@@ -137,19 +138,8 @@ app.post("/verify-payment", async (req, res) => {
 
     const paymentId = successPayment.cf_payment_id;
 
-    // ✅ PACKAGE ID → NAME MAP
-    const packageMap = {
-      "1": "Goa Beach Tour",
-      "2": "Manali Family Trip",
-      "3": "Jaipur Educational Tour",
-      "4": "Varanasi Spiritual Tour",
-      "5": "Kashmir Valley Trip",
-      "6": "Rishikesh Adventure Camp",
-      "7": "Amritsar Religious Tour",
-      "8": "Udaipur Family Trip",
-    };
-
-const packageName = packageMap[formData.packageId] || "Unknown Package";
+    // ❌ packageMap हटाया
+    // ✅ frontend से ही package info use कर रहे हैं
 
     // ✅ USER EMAIL
     await transporter.sendMail({
@@ -162,7 +152,7 @@ const packageName = packageMap[formData.packageId] || "Unknown Package";
 
         <p><b>Order ID:</b> ${order_id}</p>
         <p><b>Payment ID:</b> ${paymentId}</p>
-        <p><b>Package:</b> ${packageName}</p>
+        <p><b>Package ID:</b> ${formData.packageId}</p>
         <p><b>Date:</b> ${formData.date}</p>
       `,
     });
@@ -177,7 +167,7 @@ const packageName = packageMap[formData.packageId] || "Unknown Package";
         <p><b>Name:</b> ${formData.name}</p>
         <p><b>Email:</b> ${formData.email}</p>
         <p><b>Phone:</b> ${formData.phone}</p>
-        <p><b>Package:</b> ${packageName}</p>
+        <p><b>Package ID:</b> ${formData.packageId}</p>
         <p><b>Date:</b> ${formData.date}</p>
       `,
     });
