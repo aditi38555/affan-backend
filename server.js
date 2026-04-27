@@ -6,6 +6,10 @@ const nodemailer = require("nodemailer");
 
 const app = express();
 
+app.get("/", (req, res) => {
+  res.send("Wanderlust Backend is running 🚀");
+});
+
 /* =========================
    CORS FIX (IMPORTANT)
 ========================= */
@@ -13,12 +17,12 @@ app.use(cors({
   origin: [
     "http://localhost:5173",
     "http://localhost:8081",
+    "http://localhost:8080",
     "https://affantravel.netlify.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
-
 
 
 // preflight support (VERY IMPORTANT)
@@ -215,7 +219,7 @@ app.post("/contact", async (req, res) => {
 /* =========================
    START SERVER
 ========================= */
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5000;
 console.log("NEW BACKEND RUNNING ✅");
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
